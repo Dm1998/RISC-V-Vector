@@ -23,6 +23,7 @@
 ../rtl/shared/onehot_detect.sv
 ../rtl/shared/rr_arbiter.sv
 ../rtl/shared/sram.sv
+../rtl/shared/main_memory.sv
 
 ../rtl/shared/data_cache.sv
 ../rtl/shared/ld_st_buffer.sv
@@ -48,3 +49,8 @@
 ../rtl/vector/vex_pipe.sv
 ../rtl/vector/v_int_alu.sv
 ../rtl/vector/v_fp_alu.sv
+../rtl/vector/vdecode.sv
+
+../rtl/vector/top.sv
+../rtl/vector/top_scalar.sv
+../rtl/vector/top_tb.sv

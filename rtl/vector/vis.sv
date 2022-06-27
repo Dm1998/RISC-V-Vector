@@ -314,8 +314,10 @@ module vis #(
     end
 
     //Locked status per elem/vreg
-    logic ticket_match_locked;
-    assign ticket_match_locked = (unlock_ticket === locked_ticket[unlock_reg_a]);
+    logic ticket_match_locked_a;
+    logic ticket_match_locked_b;
+    assign ticket_match_locked_a = (unlock_ticket === locked_ticket[unlock_reg_a]);
+    assign ticket_match_locked_b = (unlock_ticket === locked_ticket[unlock_reg_b]);
 
     always_ff @(posedge clk or negedge rst_n) begin: StatusLocked
         if(!rst_n) begin
@@ -326,15 +328,15 @@ module vis #(
                     if(do_issue && vl_therm[k] && dst_oh[i] && instr_in.lock[1] && !instr_in.dst_iszero) begin
                         locked[i][k]     <= 1;
                         locked_ticket[i] <= instr_in.ticket;
-                    // end else if(do_issue && vl_therm[k] && src1_oh[i] && instr_in.lock[0] && !instr_in.src1_iszero) begin // for now mem ops dont use src1
-                    //     locked[i][k]     <= 1;                                                                            // and dont release src1, might change
-                    //     locked_ticket[i] <= instr_in.ticket;
+                    end if(do_issue && vl_therm[k] && src1_oh[i] && instr_in.lock[0] && instr_in.lock == 2'b01 && !instr_in.src1_iszero) begin 
+                         locked[i][k]     <= 1;                                                                           
+                         locked_ticket[i] <= instr_in.ticket;
                     end else if(do_issue && vl_therm[k] && src2_oh[i] && instr_in.lock[0] && !instr_in.src2_iszero) begin
                         locked[i][k]     <= 1;
                         locked_ticket[i] <= instr_in.ticket;
-                    end else if(unlock_en && unlock_reg_a_oh[i] && ticket_match_locked) begin
+                    end else if(unlock_en && unlock_reg_a_oh[i] && ticket_match_locked_a) begin
                         locked[i][k] <= 0;
-                    end else if(unlock_en && unlock_reg_b_oh[i] && ticket_match_locked) begin
+                    end else if(unlock_en && unlock_reg_b_oh[i] && ticket_match_locked_b) begin
                         locked[i][k] <= 0;
                     end
                 end
@@ -369,7 +371,7 @@ module vis #(
         .DATA_WIDTH(DATA_WIDTH      )
     ) vrf (
         .clk         (clk         ),
-        .reset       (do_reconfigure), // state resetted during reconfiguration
+        .reset       (~rst_n), // state resetted during reconfiguration
         //Read Ports
         .rd_addr_1   (src_1       ),
         .data_out_1  (data_1      ),

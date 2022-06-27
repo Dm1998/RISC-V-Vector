@@ -168,7 +168,7 @@ module vrrm #(
         .read_addr_3(instr_in.src2     ),
         .read_data_3(remapped_src2     ),
         .remapped_3 (                  ),
-        //Mask Port (always v1)
+        //Mask Port (always v0)
         .mask_src   (instr_out.mask_src)
     );
 

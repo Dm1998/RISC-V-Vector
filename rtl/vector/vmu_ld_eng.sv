@@ -316,9 +316,15 @@ module vmu_ld_eng #(
             if(resp_valid_i && !resp_row && resp_elem_th[i]) begin
                 scratchpad[0][i] <= data_vector[i*32 +: 32];
             end
+            if(resp_valid_i && !resp_row && !resp_elem_th[i]) begin
+                scratchpad[0][i] <= 0;
+            end
             // row 1 maintenance
             if(resp_valid_i && resp_row && resp_elem_th[i]) begin
                 scratchpad[1][i] <= data_vector[i*32 +: 32];
+            end
+            if(resp_valid_i && resp_row && !resp_elem_th[i]) begin
+                scratchpad[1][i] <=0;
             end
         end
     end

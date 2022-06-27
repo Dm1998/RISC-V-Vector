@@ -64,9 +64,9 @@ module vdata_operation #(
     //=======================================================
     // Mask for new memory block (STORES)
     //=======================================================
-    assign lower_mask   = ~('1 << offset_ammount);
-    assign upper_mask   = lower_mask << size_in_bits;
-    assign store_mask   = upper_mask & lower_mask;
+    assign lower_mask   = ~('1 << size_in_bits);
+    assign upper_mask   = lower_mask << offset_ammount;
+    assign store_mask   = upper_mask /*| lower_mask*/;
     // shift the data to the correct position inside the block
     assign new_data     = (input_data << offset_ammount) & store_mask;
     // zero-out the old data inside the input block

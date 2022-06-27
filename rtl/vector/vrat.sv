@@ -69,7 +69,7 @@ module vrat #(
     assign read_data_3 = ratMem[read_addr_3];
     assign remapped_3  = remapped[read_addr_3];
 
-    assign mask_src   = ratMem['d1];
+    assign mask_src   = ratMem['d0];
 
 
 endmodule
