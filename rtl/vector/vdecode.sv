@@ -22,7 +22,7 @@ module vdecode_mod #(
 	input  logic						valid_i				,
 	output logic						valid_o				,
 	input  logic [DATA_FROM_SCALAR-1:0] vector_instructions , 
-	output to_vector 					instr_in
+	output to_vector 					instr_out
 
 );
  
@@ -134,8 +134,8 @@ always_comb begin
 		vsetflag = 0;
 
 	if(state==IDLE) begin
-		instr_in.microop = 7'b1111111;
-		instr_in.fu	     = 2'b11	 ;
+		instr_out.microop = 7'b1111111;
+		instr_out.fu	     = 2'b11	 ;
 	end
 	else begin
 		case(output_inst[70:64])
@@ -144,204 +144,204 @@ always_comb begin
 			//vsets
 			9'b111??????:begin
 				if(~no_reconfigure) 
-					instr_in.microop     = 7'b0000000 ;	 
+					instr_out.microop     = 7'b0000000 ;	 
 				else 
-					instr_in.microop     = 7'b1111111 ; 
+					instr_out.microop     = 7'b1111111 ; 
 
 			end
 			//vadd(OPIVV)
 			9'b000000000: begin
 			
-				instr_in.microop = 7'b0000001;
+				instr_out.microop = 7'b0000001;
 				
 			end
 			//vadd(OPIVI)
 			9'b011000000: begin
 				
-				instr_in.microop = 7'b0000010;
+				instr_out.microop = 7'b0000010;
 				
 			end            
 			//vand(OPIVV)
 			9'b000001001: begin
 				
-					instr_in.microop = 7'b0010110;
+					instr_out.microop = 7'b0010110;
 				
 			end
 			//vand(OPIVI)
 			9'b011001001: begin
 				
-					instr_in.microop = 7'b0010111;
+					instr_out.microop = 7'b0010111;
 				
 			end
 			//vor(OPIVV)
 			9'b000001010: begin
 				
-					instr_in.microop = 7'b0011000;
+					instr_out.microop = 7'b0011000;
 				
 			end
 			//vor(OPIVI)
 			9'b011001010: begin
 				
-					instr_in.microop = 7'b0011001;
+					instr_out.microop = 7'b0011001;
 				
 			end
 			//vxor(OPIVV)
 			9'b000001011: begin
 				
-					instr_in.microop = 7'b0011010;
+					instr_out.microop = 7'b0011010;
 				
 			end
 			//vxor(OPIVI)
 			9'b011001011: begin
 				
-					instr_in.microop = 7'b0011011;
+					instr_out.microop = 7'b0011011;
 				
 			end
 			//vmul(OPMVV)
 			9'b010100101: begin
 				
-					instr_in.microop = 7'b0000111;
+					instr_out.microop = 7'b0000111;
 				
 			end
 			//vmulh(OPMVV)
 			9'b010100111: begin
 				
-					instr_in.microop = 7'b0001000;
+					instr_out.microop = 7'b0001000;
 				
 			end
 			//vmulhu(OPMVV)
 			9'b010100100: begin
 				
-					instr_in.microop = 7'b0001010;
+					instr_out.microop = 7'b0001010;
 				
 			end
 			//vmulhsu(OPMVV)
 			9'b010100110: begin
 				
-					instr_in.microop = 7'b0001001;
+					instr_out.microop = 7'b0001001;
 				
 			end
 			//vsll(OPIVV)
 			9'b000100101: begin
 				
-					instr_in.microop = 7'b0010000;
+					instr_out.microop = 7'b0010000;
 				
 			end
 			//vsll(OPIVI)
 			9'b011100101: begin
 				
-					instr_in.microop = 7'b0010001;
+					instr_out.microop = 7'b0010001;
 				
 			end
 			//vsrl(OPIVV)
 			9'b000101000: begin
 				
-					instr_in.microop = 7'b0010100;
+					instr_out.microop = 7'b0010100;
 				
 			end
 			//vsrl(OPIVI)
 			9'b011101000: begin
 				
-					instr_in.microop = 7'b0010101;
+					instr_out.microop = 7'b0010101;
 				
 			end
 			//vsra(OPIVV)
 			9'b000101001: begin
 				
-					instr_in.microop = 7'b0010010;
+					instr_out.microop = 7'b0010010;
 				
 			end
 			//vsra(OPIVI)
 			9'b011101001: begin
 				
-					instr_in.microop = 7'b0010011;
+					instr_out.microop = 7'b0010011;
 				
 			end
 			//vmseq(OPIVV) 
 			9'b000011000: begin
 				
-					instr_in.microop = 7'b0011100;
+					instr_out.microop = 7'b0011100;
 				
 			end
 			//vmslt(OPIVV)
 			9'b000011011: begin
 				
-					instr_in.microop = 7'b0011101;
+					instr_out.microop = 7'b0011101;
 				
 			end
 			//vmsltu(OPIVV)
 			9'b000011010: begin
 				
-					instr_in.microop = 7'b0011110;
+					instr_out.microop = 7'b0011110;
 				
 			end
 			//vsub(OPIVV)
 			9'b000000010: begin
 				
-					instr_in.microop = 7'b0000101;
+					instr_out.microop = 7'b0000101;
 				
 			end
 			//vdiv(OPMVV)
 			9'b010100001: begin
 				
-					instr_in.microop = 7'b0001100;
+					instr_out.microop = 7'b0001100;
 				
 			end
 			//vdivu(OPVV)
 			9'b010100000: begin
 				
-					instr_in.microop = 7'b0001101;
+					instr_out.microop = 7'b0001101;
 				
 			end
 			//vrem(OPMVV)
 			9'b010100011: begin
 				
-					instr_in.microop = 7'b0001110;
+					instr_out.microop = 7'b0001110;
 				
 			end
 			//vremu(OPMVV)
 			9'b010100010: begin
 				
-					instr_in.microop = 7'b0001111;
+					instr_out.microop = 7'b0001111;
 				
 			end
 			//vredadd(OPMVV)
 			9'b010000000: begin
 				
-					instr_in.microop = 7'b1000000;
+					instr_out.microop = 7'b1000000;
 				
 			end
 			//vredand(OPMVV)
 			9'b010000001: begin
 				
-					instr_in.microop = 7'b1000001;
+					instr_out.microop = 7'b1000001;
 				
 			end
 			//vredor(OPMVV)
 			9'b010000010: begin
 				
-					instr_in.microop = 7'b1000010;
+					instr_out.microop = 7'b1000010;
 				
 			end
 			//vredxor(OPMVV)
 			9'b010000011: begin
 				
-					instr_in.microop = 7'b1000011;
+					instr_out.microop = 7'b1000011;
 				
 			end
 			default:begin
-					instr_in.microop = 7'b1111111;
+					instr_out.microop = 7'b1111111;
 			end
 			endcase
 			
 			if(vsetflag) begin
 				if(~no_reconfigure)
-					instr_in.fu             = 2'b00  ;
+					instr_out.fu             = 2'b00  ;
 				else
-					instr_in.fu             = 2'b11  ;
+					instr_out.fu             = 2'b11  ;
 			end
 			else 
-					instr_in.fu             = 2'b10  ;		
+					instr_out.fu             = 2'b10  ;		
 
 		end
 		
@@ -349,126 +349,126 @@ always_comb begin
 			case(choice_mem_op)
 				// vle8
 				5'b00000:begin
-					instr_in.microop = 7'b1000100;
+					instr_out.microop = 7'b1000100;
 				end
 				//vle16
 				5'b00101:begin
-					instr_in.microop = 7'b1001000;
+					instr_out.microop = 7'b1001000;
 				end
 				//vle32
 				5'b00110:begin
-					instr_in.microop = 7'b1000000;
+					instr_out.microop = 7'b1000000;
 				end
 				//vle64
 				5'b00111:begin
-					instr_in.microop = 7'b1000000;
+					instr_out.microop = 7'b1000000;
 				end
 				
 				// vloxei8
 				5'b01000:begin
-					instr_in.microop = 7'b1110100;
+					instr_out.microop = 7'b1110100;
 				end
 				// vloxei16
 				5'b01101:begin
-					instr_in.microop = 7'b1001000;
+					instr_out.microop = 7'b1001000;
 				end
 				// vloxei32
 				5'b01110:begin
-					instr_in.microop = 7'b1110000;
+					instr_out.microop = 7'b1110000;
 				end
 				// vloxei64
 				5'b01111:begin
-					instr_in.microop = 7'b1110000;
+					instr_out.microop = 7'b1110000;
 				end
 				
 				// vlse8
 				5'b10000:begin
-					instr_in.microop = 7'b1100100;
+					instr_out.microop = 7'b1100100;
 				end
 				// vlse16
 				5'b10101:begin
-					//instr_in.microop = 7'b1001000;
+					//instr_out.microop = 7'b1001000;
 				end
 				// vlse32
 				5'b10110:begin
-					instr_in.microop = 7'b1100000;
+					instr_out.microop = 7'b1100000;
 				end
 				// vlse64
 				5'b10111:begin
-					instr_in.microop = 7'b1100000;
+					instr_out.microop = 7'b1100000;
 				end
 				default:begin
-					instr_in.microop = 7'b1111111;
+					instr_out.microop = 7'b1111111;
 				end
 			endcase
 			
-			instr_in.fu             = 2'b00  ;
+			instr_out.fu             = 2'b00  ;
 
 			end
 			7'b0100111:begin
 			case(choice_mem_op)
 				// vse8
 				5'b00000:begin
-					instr_in.microop = 7'b0000100;
+					instr_out.microop = 7'b0000100;
 				end
 				//vse16
 				5'b00101:begin
-					instr_in.microop = 7'b0001000;
+					instr_out.microop = 7'b0001000;
 				end
 				//vse32
 				5'b00110:begin
-					instr_in.microop = 7'b0000000;
+					instr_out.microop = 7'b0000000;
 				end
 				//vse64
 				5'b00111:begin
-					instr_in.microop = 7'b0000000;
+					instr_out.microop = 7'b0000000;
 				end
 				
 				// vsoxei8
 				5'b01000:begin
-					instr_in.microop = 7'b0110100;
+					instr_out.microop = 7'b0110100;
 				end
 				// vsoxei16
 				5'b01101:begin
-					instr_in.microop = 7'b0111000;
+					instr_out.microop = 7'b0111000;
 				end
 				// vsoxei32
 				5'b01110:begin
-					instr_in.microop = 7'b0110000;
+					instr_out.microop = 7'b0110000;
 				end
 				// vsoxei64
 				5'b01111:begin
-					instr_in.microop = 7'b0110000;
+					instr_out.microop = 7'b0110000;
 				end
 				
 				// vsse8
 				5'b10000:begin
-					instr_in.microop = 7'b0100100;
+					instr_out.microop = 7'b0100100;
 				end
 				// vsse16
 				5'b10101:begin
-					instr_in.microop = 7'b0101000;
+					instr_out.microop = 7'b0101000;
 				end
 				// vsse32
 				5'b10110:begin
-					instr_in.microop = 7'b0100000;
+					instr_out.microop = 7'b0100000;
 				end
 				// vsse64
 				5'b10111:begin
-					instr_in.microop = 7'b0100000;
+					instr_out.microop = 7'b0100000;
 				end
 				default:begin
-					instr_in.microop = 7'b1111000;
+					instr_out.microop = 7'b1111000;
 				end
 				
 			endcase
 			
-			instr_in.fu             = 2'b00  ;
+			instr_out.fu             = 2'b00  ;
 			
 			end
 			default:begin
-				instr_in.microop = 7'b0000001;
-				instr_in.fu      = 2'b10  ;
+				instr_out.microop = 7'b0000001;
+				instr_out.fu      = 2'b10  ;
 			end
 		endcase
 
@@ -544,56 +544,56 @@ always_comb begin
 
 		avl   					= output_inst[31:0] ;
 		
-		instr_in.dst  		    = 0    ;
-		instr_in.src1           = 0    ;
-		instr_in.src2           = 0    ;
-		instr_in.use_mask       = 1'b0 ;
-		instr_in.immediate 	    = 0    ;
-		instr_in.reconfigure    = 1'b1 ;
-		instr_in.valid 			= (state==BUBBLE) ? 1'b0 : ~no_reconfigure ;
-		instr_in.data1          = 0    ;
-		instr_in.data2          = 0    ;
-		instr_in.maxvl			= ( (state==BUBBLE) & no_reconfigure ) ? 0 : maxvl;
-		instr_in.vl				= ( (state==BUBBLE) & no_reconfigure ) ? 0 : vl   ;	
+		instr_out.dst  		    = 0    ;
+		instr_out.src1          = 0    ;
+		instr_out.src2          = 0    ;
+		instr_out.use_mask      = 1'b0 ;
+		instr_out.immediate 	= 0    ;
+		instr_out.reconfigure   = 1'b1 ;
+		instr_out.valid 		= (state==BUBBLE) ? 1'b0 : ~no_reconfigure ;
+		instr_out.data1         = 0    ;
+		instr_out.data2         = 0    ;
+		instr_out.maxvl			= ( (state==BUBBLE) & no_reconfigure ) ? 0 : maxvl;
+		instr_out.vl			= ( (state==BUBBLE) & no_reconfigure ) ? 0 : vl   ;	
 	end
 	else begin
 		if(state==IDLE) begin
-			instr_in.reconfigure    = 1'b1 ;
-			instr_in.dst  		    = 0    ;
-			instr_in.src1           = 0    ;
-			instr_in.src2           = 0    ;
-			instr_in.use_mask       = 1'b0 ;
-			instr_in.immediate 	    = 0    ;
+			instr_out.reconfigure   = 1'b1 ;
+			instr_out.dst  		    = 0    ;
+			instr_out.src1          = 0    ;
+			instr_out.src2          = 0    ;
+			instr_out.use_mask      = 1'b0 ;
+			instr_out.immediate 	= 0    ;
 
-			instr_in.valid 			= 0    ;
-			instr_in.data1          = 0    ;
-			instr_in.data2          = 0    ;				 
-			instr_in.maxvl			= 0    ;
-			instr_in.vl				= 0    ;
+			instr_out.valid 		= 0    ;
+			instr_out.data1         = 0    ;
+			instr_out.data2         = 0    ;				 
+			instr_out.maxvl			= 0    ;
+			instr_out.vl			= 0    ;
 		end
 		else begin
-			instr_in.reconfigure    = 1'b0      					;
-			instr_in.dst  		    = output_inst[75:71]  			;
+			instr_out.reconfigure   = 1'b0      					;
+			instr_out.dst  		    = output_inst[75:71]  			;
 			
 			// Arithmetic and Vset instructions.
 			if( output_inst[70:64] == 7'b1010111) begin
-				instr_in.src1           = output_inst[83:79]  			;
-				instr_in.src2           = output_inst[88:84]  			;
-				instr_in.immediate 	    = output_inst[83:79]  			;
+				instr_out.src1      = output_inst[83:79]  			;
+				instr_out.src2      = output_inst[88:84]  			;
+				instr_out.immediate = output_inst[83:79]  			;
 			
 			// Memory operations need the source operands to be flipped, and immediate to be 0.
 			end else begin
-				instr_in.src2           = output_inst[83:79]  			;
-				instr_in.src1           = output_inst[88:84]  			;
-				instr_in.immediate 	    = 5'b0				  			;
+				instr_out.src2      = output_inst[83:79]  			;
+				instr_out.src1      = output_inst[88:84]  			;
+				instr_out.immediate = 5'b0				  			;
 			end
 
-			instr_in.use_mask       = output_inst[89] 	  			;	
-			instr_in.valid 			= (state==IDLE) ? 1'b0 : 1'b1   ;
-			instr_in.data1          = output_inst[31:0]   			;
-			instr_in.data2          = output_inst[63:32]  			;				 
-			instr_in.maxvl			= maxvl 			  			;
-			instr_in.vl				= vl    			  			;
+			instr_out.use_mask      = output_inst[89] 	  			;	
+			instr_out.valid 		= (state==IDLE) ? 1'b0 : 1'b1   ;
+			instr_out.data1         = output_inst[31:0]   			;
+			instr_out.data2         = output_inst[63:32]  			;				 
+			instr_out.maxvl			= maxvl 			  			;
+			instr_out.vl			= vl    			  			;
 			end
 
 	end

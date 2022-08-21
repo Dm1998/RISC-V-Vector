@@ -69,7 +69,7 @@ vdecode_mod decoder_b(
                         .ready_o            (ready_o_decoder    ),
                         .valid_i            (valid              ),
                         .valid_o            (valid_o_decoder    ),
-                        .instr_in           (decoded_instruction),
+                        .instr_out          (decoded_instruction),
 				        .vector_instructions(vector_instructions)
 );
 //////////////////////////////////////////////////
